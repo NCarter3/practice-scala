@@ -76,17 +76,14 @@ object HelloWorld {
  *
  * and the apply method in the companion object could then just call that constructor.
  */
-object HelloWorldClassAndObject {
-	def apply(initialText:String):HelloWorldClassAndObject = {
-		new HelloWorldClassAndObject {
-			val text="FixMe"
-		}
-	}
+class HelloWorldClassAndObject(text:String) {
+	def echo:String = text
 }
 
-abstract class HelloWorldClassAndObject {
-	val text:String
-	def echo:String = text
+object HelloWorldClassAndObject {
+	def apply(initialText:String):HelloWorldClassAndObject = {
+		new HelloWorldClassAndObject(initialText)
+	}
 }
 
 /*================================= Traits =====================================*/
@@ -99,11 +96,11 @@ object HelloWorldWithTraits extends HelloTrait with WorldTrait {
  * - combine the 'helloMethod' of HelloTrait and the 'worldMethod' of WorldTrait to create a new message
  * - just replacing the FixMe string would of course be cheating :)
  */
-	def hello:String = "FixMe"
+	def hello:String = helloMethod + " " + worldMethod
 }
 
 trait HelloTrait {
-	def helloMethod:String = "FixMe"
+	def helloMethod:String = "Hello"
 }
 
 trait WorldTrait {
