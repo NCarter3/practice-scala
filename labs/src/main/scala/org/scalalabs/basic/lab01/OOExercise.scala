@@ -41,5 +41,36 @@ import scala.language.implicitConversions
  * - Use the implicit CurrencyConverter to do the conversion. 
  */
 class Euro {
+  	private var privateCents:Int = 0
+  	private var privateEuros:Int = 0
+	
+	def cents:Int = privateCents
+	def euro:Int = privateEuros
+	// TODO: This is an awful, terrible thing that makes life sad (see next line with no space in cents_=)
+	def cents_= (newCents:Int) {
+	  this.privateEuros = newCents / 100 + this.euro
+	  this.privateCents = newCents % 100
+	}
+  	def euro_= (newEuros:Int) {
+  	  this.privateEuros = newEuros
+  	}
+  
+	def inCents = euro*100 + cents
+	def +(rhs:Euro) = new Euro(this.euro + rhs.euro, this.cents + rhs.cents) 
+	def *(rhs:Int) = new Euro(this.euro * rhs, this.cents * rhs)
+	
+	def this(euro:Int, cents:Int = 0) {
+		this()
+		this.euro = euro + this.euro
+		this.cents = cents + this.cents
+	}
 
 }
+
+object Euro {
+  def fromCents(cents:Int) = { new Euro (0, cents) }
+}
+
+
+
+
