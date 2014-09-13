@@ -29,8 +29,7 @@ object ListManipulationExercise02 {
    */
   def sumOfMany(l: List[Int]*): List[Int] = {
     if (l.length == 1) l(0)
-    Nil // TODO
-//    else sumOfTwo(l(0), sumOfMany(l.drop(1)))
+    else sumOfTwo(l(0), sumOfMany(l.drop(1):_*))
   }
  
   case class Person(age: Int, firstName: String, lastName: String)
@@ -40,33 +39,7 @@ object ListManipulationExercise02 {
    * The idea is to re-write the method into more functional style. In the end, you
    * may be able to achieve the same functionality as implemented below
    * in a one-liner.
-   */
-//  def separateTheYoungFromTheOld(persons: List[Person]): List[List[String]] = {
-//    var youngins: ListBuffer[Person] = new ListBuffer[Person]()
-//    var elders: ListBuffer[Person] = new ListBuffer[Person]()
-//    var validYoungNames: ListBuffer[String] = new ListBuffer[String]()
-//    var validOldNames: ListBuffer[String] = new ListBuffer[String]()
-//
-//    for (person <- persons) {
-//        if (person.age < 18) {
-//          youngins += person
-//        } else {
-//          elders += person
-//        }
-//    }
-//
-//    var sortedYoung = youngins.toList.sortBy(_.age)
-//    var sortedOld = elders.toList.sortBy(_.age)
-//
-//    for (young <- sortedYoung) {
-//      validYoungNames += young.firstName
-//    }
-//    for (old <- sortedOld) {
-//      validOldNames += old.firstName
-//    }
-//    List(validYoungNames.toList, validOldNames.toList)
-//  }
-  
+   */  
   def separateTheYoungFromTheOld(persons: List[Person]): List[List[String]] = {
     def comparer = ((a:Person, b:Person) => if (a.age == b.age) (a.firstName < b.firstName) else (a.age < b.age))
     val sortedPeople = persons sortWith comparer 
