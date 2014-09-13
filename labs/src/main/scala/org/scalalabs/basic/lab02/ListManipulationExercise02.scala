@@ -11,7 +11,7 @@ object ListManipulationExercise02 {
    * As usual, various ways exist: pattern matching, folding, ...
    */
   def maxElementInList(l: List[Int]): Int = {
-    error("fix me")
+    l max
   }
 
   /**
@@ -19,7 +19,8 @@ object ListManipulationExercise02 {
    * of the two list
    */
   def sumOfTwo(l1: List[Int], l2: List[Int]): List[Int] = {
-    error("fix me")
+    val pairs = l1.zipAll(l2, 0, 0)
+    pairs map (e => e._1 + e._2)
   }
 
   /**
@@ -27,9 +28,11 @@ object ListManipulationExercise02 {
    * method above
    */
   def sumOfMany(l: List[Int]*): List[Int] = {
-    error("fix me")
+    if (l.length == 1) l(0)
+    Nil // TODO
+//    else sumOfTwo(l(0), sumOfMany(l.drop(1)))
   }
-
+ 
   case class Person(age: Int, firstName: String, lastName: String)
 
   /**
@@ -38,30 +41,37 @@ object ListManipulationExercise02 {
    * may be able to achieve the same functionality as implemented below
    * in a one-liner.
    */
+//  def separateTheYoungFromTheOld(persons: List[Person]): List[List[String]] = {
+//    var youngins: ListBuffer[Person] = new ListBuffer[Person]()
+//    var elders: ListBuffer[Person] = new ListBuffer[Person]()
+//    var validYoungNames: ListBuffer[String] = new ListBuffer[String]()
+//    var validOldNames: ListBuffer[String] = new ListBuffer[String]()
+//
+//    for (person <- persons) {
+//        if (person.age < 18) {
+//          youngins += person
+//        } else {
+//          elders += person
+//        }
+//    }
+//
+//    var sortedYoung = youngins.toList.sortBy(_.age)
+//    var sortedOld = elders.toList.sortBy(_.age)
+//
+//    for (young <- sortedYoung) {
+//      validYoungNames += young.firstName
+//    }
+//    for (old <- sortedOld) {
+//      validOldNames += old.firstName
+//    }
+//    List(validYoungNames.toList, validOldNames.toList)
+//  }
+  
   def separateTheYoungFromTheOld(persons: List[Person]): List[List[String]] = {
-    var youngins: ListBuffer[Person] = new ListBuffer[Person]()
-    var elders: ListBuffer[Person] = new ListBuffer[Person]()
-    var validYoungNames: ListBuffer[String] = new ListBuffer[String]()
-    var validOldNames: ListBuffer[String] = new ListBuffer[String]()
-
-    for (person <- persons) {
-        if (person.age < 18) {
-          youngins += person
-        } else {
-          elders += person
-        }
-    }
-
-    var sortedYoung = youngins.toList.sortBy(_.age)
-    var sortedOld = elders.toList.sortBy(_.age)
-
-    for (young <- sortedYoung) {
-      validYoungNames += young.firstName
-    }
-    for (old <- sortedOld) {
-      validOldNames += old.firstName
-    }
-    List(validYoungNames.toList, validOldNames.toList)
+    def comparer = ((a:Person, b:Person) => if (a.age == b.age) (a.firstName < b.firstName) else (a.age < b.age))
+    val sortedPeople = persons sortWith comparer 
+    val partitioned = sortedPeople partition (_.age < 18)
+    List(partitioned._1 map (_.firstName), partitioned._2 map (_.firstName))
   }
 
 }
