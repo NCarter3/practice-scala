@@ -33,7 +33,16 @@ object CollectionExercise01 {
    *
    */
   def googleCodeJamGooglerese(lines: String*): Seq[String] = {
-    error("fix me")
+    val key = Map(
+        ('a','y'),('b','h'),('c','e'),('d','s'),('e','o'),('f','c'),
+        ('g','v'),('h','x'),('i','d'),('j','u'),('k','i'),('l','g'),
+        ('m','l'),('n','b'),('o','k'),('p','r'),('q','z'),('r','t'),
+        ('s','n'),('t','w'),('u','j'),('v','p'),('w','f'),('x','m'),
+        ('y','a'),('z','q')
+        )
+    val characterMap = (str: String) => (str map (c => key.get(c))).toString
+    lines map characterMap
+    // TODO
   }
 }
 /*========================================================== */
@@ -49,8 +58,30 @@ object CollectionExercise02 {
    * Rewrite the method groupAdultsPerAgeGroup in the ImperativeSample java class
    * using a functional approach.
    */
+  
+  def separateTheYoungFromTheOld(persons: Seq[Person]): (Seq[Person],Seq[Person]) = {
+    def comparer = ((a:Person, b:Person) => if (a.age == b.age) (a.name < b.name) else (a.age < b.age))
+    val sortedPeople = persons sortWith comparer 
+    sortedPeople partition (_.age < 18)
+    
+  }
+  
   def groupAdultsPerAgeGroup(persons: Seq[Person]): Map[Int, Seq[Person]] = {
-    error("fix me")
+    val oldPeople = separateTheYoungFromTheOld(persons.toList)._2
+    def decade = (a:Person) => a.age / 10 * 10 
+    var ourMap = collection.mutable.Map[Int, Seq[Person]]()
+    def fillMap (person:Person) = {
+    	val ageGroup = decade(person)
+    	val value = ourMap.get(ageGroup)
+    	if (value == None) {
+    	  ourMap.put(ageGroup, Seq(person))
+    	} else {
+    	  ourMap.put(ageGroup, (value.toSeq(0)) :+ person)
+    	}
+    	person
+    }
+    oldPeople map fillMap
+    ourMap.toMap
   }
 }
 
@@ -65,8 +96,10 @@ object CollectionExercise03 {
    * checkValuesIncrease(Seq(1,2,2)) == false
    */
   def checkValuesIncrease[T <% Ordered[T]](seq: Seq[T]): Boolean =
-    error("fix me")
-
+    if (seq.length <= 1) true
+    else {
+    	seq(1) > seq(0) && checkValuesIncrease(seq.drop(1))
+    }
 }
 /*========================================================== */
 
@@ -76,6 +109,7 @@ object CollectionExercise04 {
    * To keep it simple it's ok to use String.split to extract all words of a sentence.
    */
   def calcLengthLongestWord(lines: String*): Int = {
-    error("fix me")
+    val words = (lines map (_.split(' '))).flatten
+    (words.maxBy[Int](_.length)).length()
   }
 }
