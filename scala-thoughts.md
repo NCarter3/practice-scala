@@ -16,4 +16,4 @@
 
   - What Scala features would you like to learn more about?
 
-  We want to learn more about apply and currying as well as traits, ojects, classes, methods, functions, and their differences. Also, types. Like what is Nil, really? On a metaphysical level, we are having difficulty gaining perspecive on the transidental plane of Nil and its astrological intersection with None.
+  We want to learn more about apply and currying as well as traits, ojects, classes, methods, functions, and their differences. Also, we find the type system very confusing and we aren't quite sure what to do with Nil and None values.
