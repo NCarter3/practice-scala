@@ -5,7 +5,7 @@ import sys._
 package object lab03 {
 
   /**
-   * This map contains sample testdata to clarify this exercise.
+   * This map contains sample test data to clarify this exercise.
    * It contains key value pairs where:
    * - the key is a room number
    * - the value can be:
@@ -16,6 +16,15 @@ package object lab03 {
 }
 
 object OptionExercise01 {
+  
+  def processRoom(room: Option[Option[String]]): String = {
+     room match {
+       case r if r.isEmpty => "not existing"
+       case r if r.get.isEmpty => "empty"
+       case r if r.get.get == "locked" => "not available"
+       case _ => room.get.get
+     }
+  }
 
   /**
    * Implement the room state method that should return the state of a room as a String as follows:
@@ -25,18 +34,35 @@ object OptionExercise01 {
    * - does not exist: 					"not existing"
    */
   def roomState(rooms: Map[Int, Option[String]], room: Int): String = {
-    error("Fix me")
+     val r = rooms.get(room)
+     processRoom(r)
   }
 
 }
 
 object OptionExercise02 {
+  def processRoom(room: Option[String]): String = {
+     room match {
+       case r if r.isEmpty => "empty"
+       case r if r.get == "locked" => "not available"
+       case _ => room.get
+     }
+  }
+  
   /**
    * Calculate the total amount of people in all rooms
    * Hint: define a helper function that computes a room's occupancy
    * to convert a possible numeric String (e.g. Some("12")) to an integer
    */
   def totalPeopleInRooms(rooms: Map[Int, Option[String]]): Int = {
-    error("Fix me")
+    val numbs = {
+      rooms.iterator map (
+          (x: (Int, Option[String])) => processRoom(x._2) match {
+	        case str if str == "not existing" | str == "empty" | str == "not available" => 0
+	        case str => str.toInt
+	      }
+       );
+    }
+    numbs sum
   }
 }

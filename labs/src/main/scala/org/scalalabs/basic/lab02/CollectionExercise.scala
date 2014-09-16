@@ -38,11 +38,14 @@ object CollectionExercise01 {
         ('g','v'),('h','x'),('i','d'),('j','u'),('k','i'),('l','g'),
         ('m','l'),('n','b'),('o','k'),('p','r'),('q','z'),('r','t'),
         ('s','n'),('t','w'),('u','j'),('v','p'),('w','f'),('x','m'),
-        ('y','a'),('z','q')
+        ('y','a'),('z','q'), (' ',' ')
         )
-    val characterMap = (str: String) => (str map (c => key.get(c))).toString
-    lines map characterMap
-    // TODO
+    val characterMap = (str: String) => (str map (c => {
+      val opt = key.get(c)
+      if (opt.nonEmpty) opt.get
+      else '\u0000'
+    }))
+    (lines map characterMap) //map stringy
   }
 }
 /*========================================================== */
