@@ -4,7 +4,7 @@
 
   It is really easy to do list style comprehension a la racket with the concepts of `first :: second :: rest` that allows matching of the form of lists. Pattern matching in general is really easy. The ability to do very complicated case statements with variable assignments allows for interesting and novel matching characterizations.
 
-  It seems very hard to get the right type sometime. `Option` and `Some' tend to pop up a lot and be tricky to get rid of. The safety arguments for why they are in there make sense though. It is also hard to learn some of the syntax. The collections library defines a huge number of operators that are unusual, at the least, in other languages.
+  It seems very hard to get the right type sometime. `Option` and `Some` tend to pop up a lot and be tricky to get rid of. The safety arguments for why they are in there make sense though. It is also hard to learn some of the syntax. The collections library defines a huge number of operators that are unusual, at the least, in other languages.
 
   - What is/are your favorite language design choice(s) that the designers of Scala 
   made? Why?
